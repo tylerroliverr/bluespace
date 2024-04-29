@@ -13,6 +13,12 @@
   margin: 0;
 }
 
+*::-webkit-scrollbar {
+  display: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 p {
   cursor: pointer;
   font-family: var(--studioPro);
@@ -30,4 +36,19 @@ p {
   flex-direction: column;
   gap: 14px;
   width: fit-content;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-left: 140px;
+  mix-blend-mode: multiply;
+}
+
+.imageElement {
+  height: 600px;
+  width: auto;
 }

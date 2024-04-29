@@ -23,7 +23,7 @@ export default function ArenaData() {
     ];
 
     const fetchData = async (type) => {
-        const apiUrl = `https://api.are.na/v2/channels/${type}/contents?direction=desc&sort=position&page=0&per=100`;
+        const apiUrl = `https://api.are.na/v2/channels/${type}/contents?per=100`;
     
         try {
             const response = await fetch(apiUrl);
@@ -33,7 +33,15 @@ export default function ArenaData() {
             }
     
             const data = await response.json();
-            return data.contents.filter(block => block.image && block.image.display && block.image.display.url).map(block => block.image.display.url);
+
+            const filteredData = data.contents.filter(block => block.image && block.image.display && block.image.display.url && block.description);
+            
+            const mappedData = filteredData.map(block => ({
+                imageUrl: block.image.display.url,
+                description: block.description
+            }));
+
+            return mappedData;
     
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -50,16 +58,21 @@ export default function ArenaData() {
                 const images = await fetchData(type);
                 const shuffledImages = shuffleArray(images);
 
-                shuffledImages.forEach(url => {
+                shuffledImages.forEach(({imageUrl, description}) => {
                     const imageBox = document.createElement('div');
                     imageBox.classList.add('imageBox');
-
+    
                     const imgElement = document.createElement('img');
-                    imgElement.src = url;
+                    imgElement.src = imageUrl;
                     imgElement.alt = 'Image from API';
                     imgElement.classList.add('imageElement');
-
+    
+                    const descriptionElement = document.createElement('p');
+                    descriptionElement.textContent = description;
+                    descriptionElement.classList.add('imageDescription');
+    
                     imageBox.appendChild(imgElement);
+                    imageBox.appendChild(descriptionElement);
                     imageContainers.appendChild(imageBox);
                 });
 
