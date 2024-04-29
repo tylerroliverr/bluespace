@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { hideInfo, showImages, fadeOutImages } from '@/public/eventListeners.js';
+import { hideInfo } from '@/public/eventListeners.js';
 
 const shuffleArray = array => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -74,7 +74,7 @@ export default function ArenaData() {
                 hideInfo();
                 setShowImages(true); 
             }, 0);
-            
+
         } else { 
             setTimeout(async () => { 
                 await getImages(type); 

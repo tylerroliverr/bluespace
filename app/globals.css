@@ -25,6 +25,10 @@ body {
   background-color: var(--white-clr);
 }
 
+a {
+  text-decoration: none;
+}
+
 p {
   cursor: pointer;
   font-family: var(--studioPro);
@@ -35,7 +39,7 @@ p {
 .title {
   position: fixed;
   top: 0px;
-  padding: 10px 15px;
+  padding: 10px 19px;
   background-color: var(--white-clr);
   z-index: 1;
   width: 100%;
@@ -127,4 +131,62 @@ p {
 
 .imageContainer.fade {
   opacity: 0;
+}
+
+/*PHONE*/
+@media screen and (max-width: 699px) {
+
+  .wrapper {
+    padding: 40px 15px;
+  }
+
+  .title {
+    padding: 10px 15px;
+  }
+
+  #custom-cursor {
+      width: 7.5px;
+      height: 7.5px;
+  }
+
+  #custom-cursor.hovering {
+      width: 10.5px;
+      height: 10.5px;
+  }
+
+  .imageElement {
+      height: 100%;
+  }
+
+  .leftMenu {
+    gap: 10px;
+  }
+
+  .imageContainer {
+    all: unset;
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    gap: 3px;
+    mix-blend-mode: multiply;
+    transition: opacity 1s ease-out;
+  }
+
+  .imagesWrapper {
+    padding-left: 105px;
+  }
+
+  .information {
+      padding-left: 105px;
+      margin: 0;
+  }
+
+  p {
+      font-family: var(--studio-font);
+      font-size: 0.65rem;
+  }
+
+  .star {
+      font-size: 0.4rem;
+  }
 }
