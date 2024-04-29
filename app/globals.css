@@ -5,6 +5,8 @@
 
 :root {
   --studioPro: "studio pro";
+  --white-clr: #F5F5F5;
+  --blue-clr: #000AFF;
 }
 
 * {
@@ -19,10 +21,70 @@
   scrollbar-width: none;
 }
 
+body {
+  background-color: var(--white-clr);
+}
+
 p {
   cursor: pointer;
   font-family: var(--studioPro);
   font-size: 0.9rem;
+  color: var(--blue-clr);
+}
+
+.title {
+  position: fixed;
+  top: 0px;
+  padding: 10px 15px;
+  background-color: var(--white-clr);
+  z-index: 1;
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.title p {
+  color: black;
+}
+
+#link {
+  padding-left: 3px;
+}
+
+.link {
+  cursor: pointer;
+}
+
+.info {
+  margin-left: auto;
+}
+
+.star {
+  font-size: 0.7rem;
+}
+
+.information {
+  margin-left: 140px;
+  padding: 40px 20px;
+  display: none;
+  opacity: 0;
+  transition: all 1.5s ease-out;
+  flex-direction: column;
+  height: 78vh;
+  position: fixed;
+  top: 10vh;
+  right: 0;
+}
+
+.information.active {
+  display: flex;
+}
+
+.info-text {
+  margin-top: auto;
+  text-align: right;
 }
 
 .wrapper {
@@ -51,4 +113,13 @@ p {
 .imageElement {
   height: 600px;
   width: auto;
+}
+
+.imageBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.imageBox p {
+  margin-left: auto;
 }

@@ -31,10 +31,12 @@ const fetchData = async (type) => {
         }
 
         const data = await response.json();
-        return data.contents.filter(block => block.image && block.image.display && block.image.display.url && block.description).map(block => ({
-            imageUrl: block.image.display.url,
-            description: block.description,
+        return data.contents.map(block => ({
+            imageUrl: block.image && block.image.display && block.image.display.url ? block.image.display.url : "unknown_image_url",
+            description: block.description ? block.description : "unsure"
         }));
+        
+        
 
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -72,6 +74,7 @@ export default function ArenaData() {
                     <p onClick={() => handleClick(APIUrls[0].etherial)} id="etherial">etherial</p>
                     <p onClick={() => handleClick(APIUrls[0].graphic)} id="graphic">graphic</p>
                 </div>
+                
                 <div className="imagesWrapper">
                     <div className="imageContainer">
                         {images.map(({ imageUrl, description }) => (
