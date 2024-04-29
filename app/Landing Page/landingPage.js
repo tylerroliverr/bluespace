@@ -1,7 +1,7 @@
 "use client";
 import ArenaData from "../Data Fetching/getArenaData";
 import { Suspense } from "react";
-import { infoClicked } from "/public/eventListeners.js";
+import { infoClicked } from "@/public/eventListeners.js";
 
 export default function LandingPage() {
 

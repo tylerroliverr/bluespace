@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import { hideInfo, showImages, fadeOutImages } from '@/public/eventListeners.js';
 
 const shuffleArray = array => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -47,6 +48,7 @@ const fetchData = async (type) => {
 export default function ArenaData() {
 
     const [images, setImages] = useState([]);
+    const [showImages, setShowImages] = useState(false);
 
     const getImages = async (type) => {
         try {
@@ -58,9 +60,28 @@ export default function ArenaData() {
         }
     };
 
-    // Assuming you have some way to determine what the user clicked
-    const handleClick = (type) => {
-        getImages(type);
+    function scrollToTop() {
+        window.scrollTo(0, 0);
+    }
+
+    const handleClick = async (type) => {
+        scrollToTop();
+    
+        if (showImages) {
+            setShowImages(false);
+            setTimeout(async () => { 
+                await getImages(type); 
+                hideInfo();
+                setShowImages(true); 
+            }, 0);
+            
+        } else { 
+            setTimeout(async () => { 
+                await getImages(type); 
+                hideInfo();
+                setShowImages(true); 
+            }, 1000);
+        }
     };
 
     return (
@@ -74,9 +95,9 @@ export default function ArenaData() {
                     <p onClick={() => handleClick(APIUrls[0].etherial)} id="etherial">etherial</p>
                     <p onClick={() => handleClick(APIUrls[0].graphic)} id="graphic">graphic</p>
                 </div>
-                
+
                 <div className="imagesWrapper">
-                    <div className="imageContainer">
+                    <div className={`imageContainer fade ${showImages ? 'fade' : ''}`}>
                         {images.map(({ imageUrl, description }) => (
                             <div key={imageUrl} className="imageBox">
                                 <img src={imageUrl} alt="Image from API" className="imageElement" />

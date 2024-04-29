@@ -108,6 +108,7 @@ p {
   gap: 10px;
   margin-left: 140px;
   mix-blend-mode: multiply;
+  transition: opacity 1s ease-out;
 }
 
 .imageElement {
@@ -122,4 +123,8 @@ p {
 
 .imageBox p {
   margin-left: auto;
+}
+
+.imageContainer.fade {
+  opacity: 0;
 }
