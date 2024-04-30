@@ -52,7 +52,7 @@ export default function ArenaData() {
     const [loading, setLoading] = useState(false); // Initialize loading state
 
     const getImages = async (type) => {
-        setLoading(true); // Set loading state to true when fetching data
+         // Set loading state to true when fetching data
         try {
             const fetchedImages = await fetchData(type);
             const shuffledImages = shuffleArray(fetchedImages);
@@ -61,6 +61,7 @@ export default function ArenaData() {
             console.error('Error fetching data:', error);
         } finally {
             setLoading(false); // Reset loading state when data fetching is complete
+            setShowImages(true); // Show images after loading is complete
         }
     };
 
@@ -74,17 +75,25 @@ export default function ArenaData() {
         if (showImages) {
             setShowImages(false);
             setTimeout(async () => {
+                setLoading(true);
                 await getImages(type);
                 hideInfo();
                 setShowImages(true);
             }, 0);
 
-        } else {
+        } else if (loading) {
             setTimeout(async () => {
+                setLoading(true);
                 await getImages(type);
                 hideInfo();
                 setShowImages(true);
             }, 1000);
+
+        } else if (!loading) {
+            setLoading(true);
+            await getImages(type);
+            hideInfo();
+            setShowImages(true);
         }
     };
 
@@ -101,17 +110,14 @@ export default function ArenaData() {
                 </div>
 
                 <div className="imagesWrapper">
-                    <div className={`imageContainer fade ${showImages ? 'fade' : ''}`}>
-                        {loading ? (
-                            <Loading/> // Display loading indicator if loading state is true
-                        ) : (
-                            images.map(({ imageUrl, description }) => (
-                                <div key={imageUrl} className="imageBox">
-                                    <img src={imageUrl} alt="Image from API" className="imageElement" />
-                                    <p className="imageDescription">{description}</p>
-                                </div>
-                            ))
-                        )}
+                {loading && <Loading/>}
+                    <div className={`imageContainer ${showImages ? '' : 'fade'}`}>
+                        {images.map(({ imageUrl, description }) => (
+                            <div key={imageUrl} className="imageBox">
+                                <img src={imageUrl} alt="Image from API" className="imageElement" />
+                                <p className="imageDescription">{description}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
