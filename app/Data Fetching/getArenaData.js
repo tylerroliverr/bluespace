@@ -1,6 +1,7 @@
-"use client";
 import { useState } from 'react';
 import { hideInfo } from '@/public/eventListeners.js';
+import { Suspense } from "react";
+import Loading from '../loading';
 
 const shuffleArray = array => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -36,8 +37,8 @@ const fetchData = async (type) => {
             imageUrl: block.image && block.image.display && block.image.display.url ? block.image.display.url : "unknown_image_url",
             description: block.description ? block.description : "unsure"
         }));
-        
-        
+
+
 
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -66,20 +67,20 @@ export default function ArenaData() {
 
     const handleClick = async (type) => {
         scrollToTop();
-    
+
         if (showImages) {
             setShowImages(false);
-            setTimeout(async () => { 
-                await getImages(type); 
+            setTimeout(async () => {
+                await getImages(type);
                 hideInfo();
-                setShowImages(true); 
+                setShowImages(true);
             }, 0);
 
-        } else { 
-            setTimeout(async () => { 
-                await getImages(type); 
+        } else {
+            setTimeout(async () => {
+                await getImages(type);
                 hideInfo();
-                setShowImages(true); 
+                setShowImages(true);
             }, 1000);
         }
     };
@@ -96,16 +97,18 @@ export default function ArenaData() {
                     <p onClick={() => handleClick(APIUrls[0].graphic)} id="graphic">graphic</p>
                 </div>
 
-                <div className="imagesWrapper">
-                    <div className={`imageContainer fade ${showImages ? 'fade' : ''}`}>
-                        {images.map(({ imageUrl, description }) => (
-                            <div key={imageUrl} className="imageBox">
-                                <img src={imageUrl} alt="Image from API" className="imageElement" />
-                                <p className="imageDescription">{description}</p>
-                            </div>
-                        ))}
+                    <div className="imagesWrapper">
+                    <Suspense fallback={<p>Loading...</p>}>
+                        <div className={`imageContainer fade ${showImages ? 'fade' : ''}`}>
+                            {images.map(({ imageUrl, description }) => (
+                                <div key={imageUrl} className="imageBox">
+                                    <img src={imageUrl} alt="Image from API" className="imageElement" />
+                                    <p className="imageDescription">{description}</p>
+                                </div>
+                            ))}
+                        </div>
+                        </Suspense>
                     </div>
-                </div>
             </div>
         </>
     );

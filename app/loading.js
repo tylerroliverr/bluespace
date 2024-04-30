@@ -1,4 +1,5 @@
 export default function Loading() {
+    console.log('Loading...');
     return (
       <main>
         <div className="loading">
