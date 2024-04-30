@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { hideInfo } from '@/public/eventListeners.js';
-import { Suspense } from "react";
 import Loading from '../loading';
 
 const shuffleArray = array => {
@@ -50,14 +49,18 @@ export default function ArenaData() {
 
     const [images, setImages] = useState([]);
     const [showImages, setShowImages] = useState(false);
+    const [loading, setLoading] = useState(false); // Initialize loading state
 
     const getImages = async (type) => {
+        setLoading(true); // Set loading state to true when fetching data
         try {
             const fetchedImages = await fetchData(type);
             const shuffledImages = shuffleArray(fetchedImages);
             setImages(shuffledImages);
         } catch (error) {
             console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false); // Reset loading state when data fetching is complete
         }
     };
 
@@ -97,18 +100,20 @@ export default function ArenaData() {
                     <p onClick={() => handleClick(APIUrls[0].graphic)} id="graphic">graphic</p>
                 </div>
 
-                    <div className="imagesWrapper">
-                    <Suspense fallback={<p>Loading...</p>}>
-                        <div className={`imageContainer fade ${showImages ? 'fade' : ''}`}>
-                            {images.map(({ imageUrl, description }) => (
+                <div className="imagesWrapper">
+                    <div className={`imageContainer fade ${showImages ? 'fade' : ''}`}>
+                        {loading ? (
+                            <Loading/> // Display loading indicator if loading state is true
+                        ) : (
+                            images.map(({ imageUrl, description }) => (
                                 <div key={imageUrl} className="imageBox">
                                     <img src={imageUrl} alt="Image from API" className="imageElement" />
                                     <p className="imageDescription">{description}</p>
                                 </div>
-                            ))}
-                        </div>
-                        </Suspense>
+                            ))
+                        )}
                     </div>
+                </div>
             </div>
         </>
     );

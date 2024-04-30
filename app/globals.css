@@ -43,6 +43,9 @@ p {
   font-size: 2rem;
   font-family: var(--studioPro);
   font-style: italic;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 
 .title {
