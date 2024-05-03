@@ -1,61 +1,39 @@
-"use client";
-import { useEffect, useState } from "react";
-import useFetchData from "../Data Fetching/fetchArenaData";
-import LeftMenu from "../Components/LeftMenu";
-import ImageContainer from "../Components/ImageContainer";
-import shuffleArray from "../Components/shuffleArray";
-import Loading from "../loading";
+import ArenaData from "../Data Fetching/getArenaData";
 
 export default function LandingPage() {
 
-    const [images, setImages] = useState([]);
-    const [showImages, setShowImages] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [currentType, setCurrentType] = useState('');
-    const fetchData = useFetchData();
-
-    // Fetch data when type changes
-    useEffect(() => {
-        const fetchDataAndSetImages = async () => {
-            if (currentType) {
-                setLoading(true);
-                try {
-                    const fetchedImages = await fetchData(currentType);
-                    setImages(fetchedImages);
-                    setLoading(false);
-                    setShowImages(true);
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                    setLoading(false);
-                }
-            }
-        };
-
-        fetchDataAndSetImages();
-    }, [currentType, fetchData]);
-
-    const handleClick = (type) => {
-        window.scrollTo(0, 0); // Scroll to top
-        setCurrentType(type);
-    };
+    function handleClick() {
+        infoClicked();
+    }
 
     return (
-        <div className="wrapper">
-            <LeftMenu
-                items={[
-                    { label: 'swords', type: 'bluespace-swords-armour' },
-                    { label: 'trinkets', type: 'bluespace-trinkets-treasures' },
-                    { label: 'grass', type: 'bluespace-grass-cottage' },
-                    { label: 'patterns', type: 'bluespace-patterns-shapes' },
-                    { label: 'etherial', type: 'bluespace-etherial-religion' },
-                    { label: 'graphic', type: 'bluespace-graphic-digital' }
-                ]}
-                handleClick={handleClick}
-            />
-            <div className="imagesWrapper">
-                {loading && <Loading />}
-                {showImages && <ImageContainer images={images} />}
-            </div>
-        </div>
-    );
+        <>
+            <section className="title">
+                <div>
+                    <p className="star">★</p>
+                </div>
+                <div className="link" id="link">
+                    <a href="https://blueroomstudios.com.au/">
+                        <p>the blueroom</p>
+                    </a>
+                </div>
+                <div className="info link">
+                    <p onClick={handleClick}>information</p>
+                </div>
+            </section>
+
+            <section className="information">
+                <div className="info-text">
+                    <p>hi this is the blueroom.</p>
+                    <p>think of it like my inspo playground.</p>
+                    <p>periodically updated and curated, dynamically different every visit.</p>
+                    <br />
+                    <p>i will try to credit original authors where i can, these are not my pictures.</p>
+                    <br />
+                    <p>please enjoy.</p>
+                </div>
+            </section>
+            <ArenaData />
+        </>
+    )
 }

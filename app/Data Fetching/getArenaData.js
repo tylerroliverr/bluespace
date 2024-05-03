@@ -1,3 +1,4 @@
+"use client";
 import { useState } from 'react';
 import { hideInfo } from '@/public/eventListeners.js';
 import Loading from '../loading';
